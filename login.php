@@ -11,7 +11,7 @@ if ($mysqli->connect_errno)
 $eUsername = $_REQUEST['username'];
 $ePassword = $_REQUEST['password'];
 
-//Verify password. Hash and compare database passwor dto hashed entered password
+//Verify password. Hash and compare database password to hashed entered password
 $sSQL = "SELECT `password`, `username` FROM `user` WHERE `username` = '$eUsername'";
 
 $rsMain = $mysqli->query( $sSQL );
@@ -20,14 +20,19 @@ while($row = $rsMain->fetch_assoc()){
     $sUsername = $row["username"];
 }
 
-if(password_verify($ePassword, $sPassword)){
-    session_start();
-    $_SESSION['loggedIn'] = true;
-    $_SESSION['username'] = $eUsername;
-    header("location: account.php");
+if($sPassword == NULL){
+    header("location:index.htm");
 } else {
-    header("lcoation: index.htm");
+    if(password_verify($ePassword, $sPassword)){
+        session_start();
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['username'] = $eUsername;
+        header("location: account.php");
+    } else {
+        header("location: index.htm");
+    }    
 }
+
 
 $rsMain = null;
 $mysqli->close();

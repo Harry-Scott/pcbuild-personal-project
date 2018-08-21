@@ -8,7 +8,7 @@ if ($mysqli->connect_errno)
     exit();
 }
 
-//Pulls details fromt he form
+//Pulls details from the form
 $fUsername = $_REQUEST['username'];
 $fEmail = $_REQUEST['email'];
 
